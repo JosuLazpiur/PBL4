@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" th:lang="#{idioma}"
+  layout:decorate="~{layout/layout_loged}">
+
+<head>
+  <title th:text="#{title.home}">Home</title>
+  <link rel="stylesheet" th:href="@{/css/home.css}">
+</head>
+
+<body>
+  <div layout:fragment="content" role="main">
+    <div class="container-fluid mx-10 mt-4">
+
+      <div class="row mb-4">
+        <div class="col-12 col-md-6">
+          <!-- Error general -->
+          <div th:if="${errorEntrada}" class="alert alert-danger">
+            <span th:text="#{errorEntrada}">No puedes entrar ahí.</span>
+          </div>
+
+          <!-- Formulario responsive para filtros -->
+          <form th:action="@{/producto/filtrar}" method="post">
+            <div class="filtros-responsive">
+              <div class="filtro-item">
+                <h2 for="etiqueta" class="form-label" th:text="#{home.filtroEtiqueta}">Tipo de alimento:</h2>
+                <select class="form-select" name="etiqueta" id="etiqueta">
+                  <option value="0" th:selected="${session.etiquetaId == null}" th:text="#{filtro.todos}">-- Todos --</option>
+                  <option th:each="etiqueta : ${session.etiquetas}" th:value="${etiqueta.etiquetaId}"
+                          th:text="#{${etiqueta.nombre}}" th:selected="${session.etiquetaId == etiqueta.etiquetaId}"></option>
+                </select>
+              </div>
+
+              <div class="filtro-item">
+                <h2 for="zona" class="form-label" th:text="#{home.filtroZona}">Zonas:</h2>
+                <select class="form-select" name="zona" id="zona">
+                  <option value="0" th:selected="${session.zonaId == null}" th:text="#{filtro.todos}">-- Todos --</option>
+                  <option th:each="zona : ${session.zonas}" th:value="${zona.zonaId}"
+                          th:text="#{${zona.nombre}}" th:selected="${session.zonaId == zona.zonaId}"></option>
+                </select>
+              </div>
+            </div>
+
+            <div class="mt-3">
+              <button type="submit" class="btn btn-primary w-100">
+                <img th:src="@{/images/lupa.png}" class="flag-icon" alt="Buscar" />
+                <span th:text="#{ticket.aplicar}">Aplicar</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Productos -->
+      <div class="row">
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4" th:each="producto : ${productos}" 
+             th:attr="data-rating=${producto.mediaEstrellas}">
+          <a th:href="@{'/producto/' + ${producto.productoId} + '/view'}" class="product-view">
+            <div class="card box-shadow border border-success product-card-hover rounded-4">
+              <img th:src="@{'/uploads/productos/' + ${producto.imagen}}" alt="Imagen del producto"
+                class="rounded-top-4 img-fluid" />
+              <div class="card-body rounded-bottom-4">
+                <h5 class="card-title" th:text="${producto.nombre}">Nombre</h5>
+                <p class="card-text" th:text="${producto.descripcion}">Descripción</p>
+                <p class="card-text">
+                  <strong th:text="#{producto.precio}">Precio:</strong>
+                  <span th:text="${producto.precio} + '€'">DISPONIBLE</span>
+                </p>
+                
+                <!-- Sistema de valoración -->
+                <div class="rating-container" th:if="${producto.mediaEstrellas != null}">
+                  <div class="stars-rating-wrapper">
+                    <div class="stars">
+                      <span class="star-outer">★<span class="star-inner">★</span></span>
+                      <span class="star-outer">★<span class="star-inner">★</span></span>
+                      <span class="star-outer">★<span class="star-inner">★</span></span>
+                      <span class="star-outer">★<span class="star-inner">★</span></span>
+                      <span class="star-outer">★<span class="star-inner">★</span></span>
+                    </div>
+                    <span class="rating-value" 
+                        th:text="'(' + ${#numbers.formatDecimal(producto.mediaEstrellas, 1, 1)} + ')'"></span>
+                  </div>
+                  <span class="rating-kop"
+                        th:text="${valoracionesMap[producto.productoId]} + ' ' + #{prodVal.text}"></span>
+                </div>
+                <span class="no-rating" 
+                      th:if="${producto.mediaEstrellas == null}">No hay valoraciones</span>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

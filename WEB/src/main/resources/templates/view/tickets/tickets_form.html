@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" th:lang="#{idioma}"
+    layout:decorate="~{layout/layout_loged}">
+
+<head>
+
+    <link rel="stylesheet" th:href="@{/css/form-style.css}">
+    <title th:text="${ticket != null and ticket.ticketId != null} ? #{ticket.tituloeditar} : #{ticket.titulocrear}">
+        Formulario Ticket
+    </title>
+</head>
+
+<body>
+    <div layout:fragment="content" class="main-content">
+        <div class="registro-container">
+            <div class="card registro-card">
+                <div class="card-body">
+
+                    <!-- Título -->
+                    <h2 class="card-title text-center mb-4"
+                        th:text="${ticket.ticketId != null} ? #{ticket.edit} : #{ticket.create}">
+                        Crear/Editar Ticket
+                    </h2>
+                    <!-- Formulario -->
+                    <form
+                        th:action="${ticket.ticketId != null} ? @{/ticket/{id}/edit(id=${ticket.ticketId})} : @{/ticket/create}"
+                        method="post" id="registroForm" enctype="multipart/form-data">
+
+                        <!-- Fecha de entrega -->
+                        <div class="mb-3" th:with="fechaEntrega=${ticket?.fechaEntregaEsperada}">
+                            <label for="ticketDate" class="form-label" th:text="#{ticket.date}">Fecha de entrega</label>
+                            <input type="datetime-local" class="form-control" id="ticketDate" name="fechaEntregaEsperada"
+                            th:value="${fechaEntrega != null} ? ${#temporals.format(fechaEntrega, 'yyyy-MM-dd''T''HH:mm')} : ''"
+                            required>
+                        </div>
+                        <!-- Descripcion -->
+                        <div class="mb-3">
+                            <label for="descripcionTicket" class="form-label" th:text="#{ticket.descripcionTicket}">Descripcion</label>
+                            <textarea class="form-control" id="descripcionTicket" name="descripcionTicket" rows="3"
+                                th:value="${ticket.descripcionTicket != null} ? ${ticket.descripcionTicket} : ''"></textarea>
+                        </div>
+                        <!-- Cliente (solo lectura) -->
+                        <div class="mb-3">
+                            <label for="clienteUsername" class="form-label" th:text="#{ticket.user}">Cliente</label>
+                            <select class="form-control" id="clienteUsername" name="clienteUsername" style="width: 100%;">
+                                <option value="" th:text="#{ticket.selectCliente}">-- Select a customer --</option>
+                                <option th:each="cliente : ${clientes}" 
+                                        th:value="${cliente.username}"
+                                        th:text="${cliente.username + ' - ' + cliente.nombre + ' ' + cliente.apellido}"
+                                        th:selected="${ticket.cliente != null} ? ${ticket.cliente.username == cliente.username} : false">
+                                </option>
+                            </select>
+                        </div>
+
+                        <!-- Productos (Cesta) -->
+                        <div class="mb-3">
+                            <label class="form-label" th:text="#{ticket.productos}">Productos</label>
+
+                            <!-- Contenedor donde se añadirán productos -->
+                            <div id="productos-container">
+                                <!-- Renderiza productos existentes si se está editando -->
+                                <div class="row mb-2" th:each="cesta, iterStat : ${cestas}">
+                                    <div class="col">
+                                        <select class="form-control"
+                                            th:name="'cestas[' + ${iterStat.index} + '].producto.productoId'" required>
+                                            <option th:each="producto : ${productos}" th:value="${producto.productoId}"
+                                                th:text="${producto.nombre}"
+                                                th:selected="${producto.productoId == cesta.producto.productoId}">
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <input type="number" class="form-control"
+                                            th:name="'cestas[' + ${iterStat.index} + '].cantidad'"
+                                            th:value="${cesta.cantidad}" min="1" required />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Plantilla oculta para JS -->
+                            <template id="producto-template">
+                                <div class="row mb-2">
+                                    <div class="col">
+                                        <select class="form-control" name="cestas[__index__].producto.productoId"
+                                            required>
+                                            <option th:each="producto : ${productos}" th:value="${producto.productoId}"
+                                                th:text="${producto.nombre}">
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <input type="number" class="form-control" name="cestas[__index__].cantidad"
+                                            placeholder="Cantidad" min="1" required />
+                                    </div>
+                                </div>
+                            </template>
+
+                            <!-- Botón para añadir productos -->
+                            <button type="button" class="btn btn-secondary mt-2" id="add-producto-btn">+ Añadir
+                                producto</button>
+                        </div>
+
+                        <!-- Botón enviar -->
+                        <button type="submit" class="btn btn-primary"
+                            th:text="${ticket?.ticketId != null} ? #{registro.editar} : #{registro.siguiente}">
+                            Enviar
+                        </button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

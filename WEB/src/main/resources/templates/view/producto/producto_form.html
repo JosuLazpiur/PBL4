@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" th:lang="#{idioma}"
+  layout:decorate="~{layout/layout_loged}">
+
+<head>
+  <link rel="stylesheet" th:href="@{/css/form-style.css}">
+  <title th:text="${producto.productoId != null} ? #{producto.tituloeditar} : #{producto.titulocrear}">Formulario
+    Producto</title>
+</head>
+
+<body>
+  <div layout:fragment="content" class="main-content">
+    <div class="registro-container">
+      <div class="card registro-card">
+        <div class="card-body">
+
+          <!-- Título dinámico -->
+          <h2 class="card-title text-center mb-4"
+            th:text="${producto?.productoId != null} ? #{producto.edit} : #{producto.create}">
+            Crear/Editar Producto
+          </h2>
+
+          <!-- Formulario -->
+          <form
+            th:action="@{${producto.productoId != null} ? '/producto/' + ${producto.productoId} + '/edit' : '/producto/create'}"
+            method="post" id="registroForm" enctype="multipart/form-data">
+
+            <!-- Nombre -->
+            <div class="mb-3">
+              <label for="nombre" class="form-label" th:text="#{producto.nombre}">Nombre</label>
+              <input type="text" class="form-control" id="nombre" name="nombre" th:value="${producto?.nombre}" required>
+            </div>
+
+            <!-- Descripción -->
+            <div class="mb-3">
+              <label for="descripcion" class="form-label" th:text="#{producto.descripcion}">Descripción</label>
+              <textarea class="form-control" id="descripcion" name="descripcion" rows="3"
+                th:text="${producto?.descripcion}" required></textarea>
+            </div>
+
+            <!-- Precio -->
+            <div class="mb-3">
+              <label for="precio" class="form-label" th:text="#{producto.precio}">Precio</label>
+              <input type="text" class="form-control" id="precio" name="precio" th:value="${producto?.precio}" required></input>
+            </div>
+
+            <!-- Estado -->
+            <div class="mb-3">
+              <label for="estado" class="form-label" th:text="#{producto.estado}">Estado</label>
+              <select class="form-select" id="estado" name="estado" required>
+                <option value="" disabled th:selected="${producto?.estado == null}"
+                  th:text="#{producto.seleccionaEstado}">Selecciona un estado</option>
+                <option value="AGOTADO" th:selected="${producto?.estado == 'AGOTADO'}" th:text="#{producto.agotado}">
+                  Agotado</option>
+                <option value="CASI_AGOTADO" th:selected="${producto?.estado == 'CASI_AGOTADO'}" th:text="#{producto.casi}">Casi agotado
+                </option>
+                <option value="DISPONIBLE" th:selected="${producto?.estado == 'DISPONIBLE'}"
+                  th:text="#{producto.disponible}">Disponible</option>
+              </select>
+            </div>
+
+            <!-- Imagen -->
+            <div class="mb-3">
+              <label for="imagen" class="form-label" th:text="#{producto.imagen}">Imagen</label>
+
+              <!-- Mostrar imagen actual si existe -->
+              <div th:if="${producto?.imagen != null}">
+                <img th:src="@{'/uploads/productos/' + ${producto.imagen}}" alt="Imagen actual" class="img-thumbnail"
+                  style="max-height: 200px;" />
+              </div>
+
+              <!-- Campo de carga de imagen -->
+              <input type="file" id="imagen" name="imagen" accept="image/*" class="input-oculto"
+                onchange="mostrarNombreArchivo()" th:attr="required=${producto?.productoId == null}" />
+
+              <!-- Botón de archivo -->
+              <label for="imagen" class="btn btn-secondary archivo-btn">
+                <span th:text="#{registro.seleccionarArchivo}">Seleccionar archivo</span>
+              </label>
+
+              <!-- Texto nombre del archivo -->
+              <span id="nombreArchivo" class="form-text archivo-nombre" th:text="#{registro.noArchivoSeleccionado}">
+                Ningún archivo seleccionado
+              </span>
+            </div>
+
+            <!-- Etiqueta -->
+            <div class="mb-3">
+              <label for="etiqueta" class="form-label" th:text="#{producto.etiqueta}">Etiqueta</label>
+              <select class="form-select" id="etiqueta" name="etiqueta" required>
+                <option value="" disabled th:selected="${producto?.etiqueta == null}"
+                  th:text="#{producto.seleccionaEtiqueta}">Selecciona una etiqueta</option>
+                <option th:each="etiqueta : ${etiquetas}" th:value="${etiqueta.etiquetaId}"
+                  th:selected="${producto?.etiqueta?.etiquetaId == etiqueta.etiquetaId}"
+                  th:text="#{${etiqueta.nombre}}">
+                </option>
+              </select>
+            </div>
+
+            <!-- Botón enviar -->
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-primary"
+                th:text="${producto?.productoId != null} ? #{registro.editar} : #{registro.siguiente}">
+                Enviar
+              </button>
+              
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

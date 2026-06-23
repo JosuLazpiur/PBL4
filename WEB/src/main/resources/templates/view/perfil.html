@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout_loged}"
+      th:lang="#{idioma}">
+<head>
+    <title th:text="#{title.perfil}">Mi Perfil</title>
+    <link rel="stylesheet" th:href="@{/css/perfil.css}" />
+</head>
+<body>
+    <div layout:fragment="content">
+        <div class="profile-container">
+            <h2 class="profile-header" th:text="#{perfil.title}">Mi Perfil</h2>
+
+            <!-- Mensajes de error -->
+            <div th:if="${errorTelefono}" class="alert alert-danger">
+                <span th:text="#{errorTelefono}">El teléfono ya está registrado.</span>
+            </div>
+
+            <!-- Imagen de perfil -->
+            <div class="profile-picture-container text-center">
+                <img th:src="@{'/uploads/usuarios/' + ${session.user.imagen}}"
+                    alt="Imagen de perfil" 
+                    class="profile-picture rounded-circle mb-3">
+                
+                <form th:action="@{'/user/' + ${session.user.usuarioId} + '/edit/imagen'}" 
+                      method="post" 
+                      enctype="multipart/form-data">
+                      
+                    <div class="file-input-wrapper mb-2">
+                        <button type="button" class="file-input-btn">
+                            <i class="bi bi-cloud-arrow-up me-2"></i>
+                            <span th:text="#{perfil.seleccionarImagen}">Seleccionar imagen</span>
+                        </button>
+                        <input type="file" name="imagen" accept="image/*" onchange="this.form.submit()">
+                    </div>
+                </form>
+            </div>
+
+            <!-- Formulario de datos -->
+            <div class="profile-form">
+                <form th:action="@{'/user/' + ${session.user.usuarioId} + '/edit'}" method="post">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="nombre" class="form-label" th:text="#{perfil.nombre}">Nombre</label>
+                            <input type="text" class="form-control" id="nombre" name="nombre"
+                                th:value="${session.user.nombre}" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="apellido" class="form-label" th:text="#{perfil.apellido}">Apellido</label>
+                            <input type="text" class="form-control" id="apellido" name="apellido"
+                                th:value="${session.user.apellido}" required>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="telefono" class="form-label" th:text="#{perfil.telefono}">Teléfono</label>
+                        <input type="text" class="form-control" id="telefono" name="telefono"
+                            th:value="${session.user.telefono}" required>
+                    </div>
+                    
+                    <div class="mb-3" th:if="${session.user.rol.name() == 'VENDEDOR'}">
+                        <label for="descripcion" class="form-label" th:text="#{perfil.descripcion}">Descripción</label>
+                        <textarea class="form-control" id="descripcion" name="descripcion"
+                                rows="4" th:text="${session.user.descripcion}"
+                                placeholder="Describe tus productos o servicios..."></textarea>
+                    </div>
+                    
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-save me-2"></i>
+                            <span th:text="#{perfil.guardarCambios}">Guardar cambios</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+</body>
+</html>

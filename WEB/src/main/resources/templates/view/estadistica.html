@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout/layout_unloged}">
+
+<head>
+  <title th:text="#{title.estadistica}">Estadistica</title>
+  <link rel="stylesheet" th:href="@{/css/estadistica.css}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <script th:inline="javascript">
+    /*<![CDATA[*/
+    const puestos = /*[[${puestos}]]*/[];
+    const ventasEstimadas = /*[[${ventasEstimadas}]]*/[];
+    /*]]>*/
+  </script>
+  <script th:src="@{/js/estadistica.js}"></script>
+</head>
+
+<body>
+  <div layout:fragment="content" class="main-content estadistica-page">
+
+    <div class="inicio-card"  id="graficoCard">
+      <div th:if="${resultado != null}" class="resultado">
+        <h2 th:text="#{estadistica.resultado}">Resultado</h2>
+        <p th:text="'Ventas estimadas: ' + ${resultado}">Ventas estimadas: --</p>
+      </div>
+
+      <div th:if="${resultado != null}" class="div-grafico">
+        <canvas id="regresionChart"></canvas>
+      </div>
+    </div>
+
+    <div class="inicio-card">
+      <h1>Calcular ventas estimadas</h1>
+      <form th:action="@{/estadistica/calcular}" method="post">
+        <label for="ventas" th:text="#{estadistica.ventas}">Ventas:</label><br>
+        <input type="number" name="ventas" required step="any" min="0"><br><br>
+
+        <label for="puestoActual" th:text="#{estadistica.puestoActual}">Puesto actual:</label><br>
+        <input type="number" name="puestoActual" required step="any" min="0"><br><br>
+
+        <label for="puestoNuevo" th:text="#{estadistica.nuevoPuesto}">Nuevo puesto:</label><br>
+        <input type="number" name="puestoNuevo" required step="any" min="0"><br><br>
+
+        <button type="submit" class="btn btn-login" th:text="#{estadistica.calcular}">Calcular</button>
+      </form>
+    </div>
+  </div>
+</body>
+
+</html>

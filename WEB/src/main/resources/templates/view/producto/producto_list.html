@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      th:lang="#{idioma}"
+      layout:decorate="~{layout/layout_loged}">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="#{misproductos.titulo}">Mis Productos</title>
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+</head>
+
+<body>
+<div layout:fragment="content" role="main">
+  <div class="container mt-4">
+    <h2 th:text="#{misproductos.titulo}">Mis Productos</h2>
+
+    <div class="row mt-4">
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4" th:each="producto : ${misProductos}">
+        <a th:href="@{'/producto/' + ${producto.productoId} + '/view'}" class="product-view"></a>
+        <div class="card box-shadow border border-primary product-card-hover rounded-4">
+          <img th:src="@{'/uploads/productos/' + ${producto.imagen}}"
+               alt="Imagen del producto"
+               class="rounded-top-4 img-fluid" />
+          <div class="card-body">
+            <h5 class="card-title" th:text="${producto.nombre}">Nombre del producto</h5>
+            <p class="card-text" th:text="${producto.descripcion}">Descripción</p>
+            <p class="card-text">
+              <strong th:text="#{producto.precio}">Precio:</strong>
+              <span th:text="${producto.precio} + '€'">DISPONIBLE</span>
+            </p>
+            <p class="card-text">
+              <strong th:text="#{home.estado}">Estado:</strong>
+              <span th:text="#{${producto.estado}}">DISPONIBLE</span>
+            </p>
+            <p class="card-text">
+              <strong th:text="#{producto.etiqueta}">Etiqueta:</strong>
+              <span th:text="#{${producto.etiqueta.nombre}}">Verduras</span>
+            </p>
+          </div>
+
+          <div class="rounded-bottom-4 card-footer border-top-0 d-flex justify-content-between">
+            <a th:href="@{'/producto/' + ${producto.productoId} + '/edit'}"
+               class="btn btn-sm btn-success" th:text="#{producto.editar}">Editar</a>
+            <a th:href="@{'/producto/' + ${producto.productoId} + '/delete'}"
+               class="btn btn-sm btn-success" th:text="#{producto.delete}">Eliminar</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

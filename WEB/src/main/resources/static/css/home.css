@@ -1,0 +1,312 @@
+/* ========== BASE ========== */
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Ubuntu', sans-serif;
+  min-height: 100%;
+  background: linear-gradient(to bottom right, #e0f2f1, #a5d6a7);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+/* Contenido principal */
+.main-content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: inherit;
+  padding: 1rem;
+}
+
+/* Encabezados */
+h1, h2 {
+  color: #2e7d32;
+  font-weight: bold;
+}
+
+/* ========= FORMULARIO DE FILTRADO ========= */
+.filtro-wrapper {
+  width: 100%;
+  margin: 0 auto 1.5rem auto;
+}
+
+.filtro-wrapper h2 {
+  font-size: 1.2rem;
+  margin-bottom: 0.75rem;
+}
+
+form {
+  background-color: #ffffffcc;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  border: 2px solid #a5d6a7;
+}
+
+/* Select */
+select.form-select {
+  border: 2px solid #a5d6a7;
+  border-radius: 8px;
+  padding: 0.5rem;
+}
+
+select.form-select:focus {
+  border-color: #66bb6a;
+  box-shadow: 0 0 8px rgba(102, 187, 106, 0.4);
+  outline: none;
+}
+
+/* Botón filtrar */
+button.btn-primary {
+  background-color: #43a047;
+  border: none;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+}
+
+button.btn-primary:hover {
+  background-color: #2e7d32;
+}
+
+.flag-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 6px;
+}
+
+/* ========= PRODUCTO CARD ========= */
+.producto-card {
+  background-color: #ffffffdd;
+  border-radius: 16px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  border: 2px solid #81c784;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.producto-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.15);
+}
+
+/* Imagen del producto */
+.producto-img, .card img {
+  height: 180px;
+  width: 100%;
+  object-fit: cover;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  background-color: #f0f0f0;
+}
+
+/* Card body */
+.card-body {
+  background: lightgoldenrodyellow;
+  border-top: 1px solid green;
+  padding: 1rem;
+}
+
+/* Card layout */
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  border-radius: 1rem;
+}
+
+.container-fluid {
+  padding-left: 3rem;
+  padding-right: 3rem;
+}
+
+.card-title {
+  color: #2e7d32;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.card-text {
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.product-card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 12px;
+}
+
+.product-card-hover:hover {
+  transform: scale(1.03);
+  box-shadow: 0 16px 32px rgba(0, 128, 0, 0.2);
+}
+
+.product-view {
+  color: inherit;
+  text-decoration: none;
+}
+.product-view:hover {
+  text-decoration: none;
+  transform: scale(1.02);
+}
+
+.card-footer{
+  background: lightgoldenrodyellow;
+}
+
+/* ===== SISTEMA DE VALORACIÓN ===== */
+/* ===== SISTEMA DE VALORACIÓN ===== */
+.rating-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 8px 0;
+  min-height: 24px;
+}
+
+.stars-rating-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.stars {
+  position: relative;
+  display: inline-flex;
+  font-size: 18px;
+  letter-spacing: 2px;
+  color: #ddd; /* Color estrellas vacías por defecto */
+}
+
+.star-outer {
+  position: relative;
+  color: #ddd;
+  display: inline-block;
+}
+
+.star-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0%;
+  overflow: hidden;
+  color: #FFA41C; /* Amarillo Amazon */
+  white-space: nowrap;
+}
+
+.rating-value {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+}
+
+.rating-kop {
+  font-size: 14px;
+  color: #777;
+  margin-top: 4px;
+}
+
+.no-rating {
+  font-size: 14px;
+  font-style: italic;
+  margin: 8px 0;
+  display: block;
+}
+
+/* === FILTROS RESPONSIVE === */
+.filtros-responsive {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.filtro-item {
+  flex: 1 1 48%;
+  min-width: 200px;
+}
+
+/* Alineación de títulos de filtros */
+.filtro-item h2 {
+  padding-bottom: 4px;
+  margin-bottom: 8px;
+  font-size: 1.1rem;
+  color: #2e7d32;
+  font-weight: bold;
+}
+
+/* Móvil: uno debajo del otro */
+@media (max-width: 768px) {
+  .filtros-responsive {
+    flex-direction: column;
+  }
+
+  .filtro-item {
+    flex: 1 1 100%;
+  }
+}
+
+/* ========== RESPONSIVE BREAKPOINTS (MOBILE FIRST) ========== */
+
+/* Pantallas pequeñas (hasta 576px) */
+@media (max-width: 576px) {
+  .card-title {
+    font-size: 1rem;
+  }
+
+  .card-text {
+    font-size: 0.85rem;
+  }
+
+  .filtro-wrapper h2 {
+    font-size: 1rem;
+  }
+
+  .main-content {
+    padding: 1rem;
+  }
+}
+
+/* Pantallas medianas (>= 768px) */
+@media (min-width: 768px) {
+  .filtro-wrapper {
+    max-width: 400px;
+  }
+
+  .main-content {
+    padding: 2rem;
+  }
+
+  .card img {
+    height: 200px;
+  }
+
+  .rating-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .rating-value, .rating-kop {
+    margin-left: 0;
+    margin-top: 4px;
+  }
+}
+
+/* Pantallas grandes (>= 992px) */
+@media (min-width: 992px) {
+  .main-content {
+    padding: 2rem 4rem;
+  }
+
+  .filtro-wrapper h2 {
+    font-size: 1.3rem;
+  }
+}
+
+/* Pantallas extra grandes (>= 1200px) */
+@media (min-width: 1200px) {
+  .main-content {
+    padding: 2rem 6rem;
+  }
+}

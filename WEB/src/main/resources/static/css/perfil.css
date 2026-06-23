@@ -1,0 +1,124 @@
+:root {
+    --verde-oscuro: #2e7d32;
+    --verde-medio: #43a047;
+    --verde-claro: #a5d6a7;
+    --verde-muy-claro: #e0f2f1;
+    --borde-verde: #81c784;
+}
+
+body {
+    background: linear-gradient(to bottom right, var(--verde-muy-claro), var(--verde-claro));
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.profile-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 80, 0, 0.1);
+    border: 2px solid var(--borde-verde);
+}
+
+.profile-header {
+    color: var(--verde-oscuro);
+    border-bottom: 2px solid var(--borde-verde);
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+}
+
+.profile-picture-container {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--borde-verde);
+    margin-bottom: 2rem;
+}
+
+.profile-picture {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border: 3px solid var(--borde-verde);
+}
+
+.profile-form {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.form-control, .form-select {
+    border: 2px solid var(--borde-verde);
+    border-radius: 8px;
+    padding: 10px 15px;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--verde-medio);
+    box-shadow: 0 0 0 0.25rem rgba(67, 160, 71, 0.25);
+}
+
+.btn-primary {
+    background-color: var(--verde-medio);
+    border: none;
+    padding: 8px 20px;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: var(--verde-oscuro);
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border: none;
+    padding: 8px 20px;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+}
+
+.file-input-wrapper {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+}
+
+.file-input-wrapper input[type=file] {
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+}
+
+.file-input-btn {
+    border: 2px solid var(--borde-verde);
+    border-radius: 8px;
+    padding: 6px 12px;
+    background-color: white;
+    color: var(--verde-oscuro);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.file-input-btn:hover {
+    background-color: var(--verde-muy-claro);
+}

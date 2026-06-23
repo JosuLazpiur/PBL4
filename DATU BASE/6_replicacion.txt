@@ -1,0 +1,29 @@
+Hemos replicado el servicio MySQL utilizado en el contenedor proporcionado por el profesor de WEB, creando un nuevo servicio idéntico. Tras ello, copiamos la base de datos original al nuevo servicio, que en adelante actuará como esclavo.
+
+Dentro del servicio principal (el maestro), consultamos los binlogs mediante el comando:
+SHOW BINARY LOGS;
+
+También creamos un usuario específico para la replicación:
+
+CREATE USER 'repli'@'%' IDENTIFIED WITH caching_sha2_password BY 'replipass';
+GRANT REPLICATION SLAVE ON *.* TO 'repli'@'%';
+FLUSH PRIVILEGES;
+
+En el servicio esclavo, activamos los modos de solo lectura y preparamos el entorno con:
+SET GLOBAL read_only = ON;
+SET GLOBAL super_read_only = ON;
+
+Después configuramos el origen de replicación con los datos obtenidos previamente:
+CHANGE REPLICATION SOURCE TO
+  SOURCE_HOST='mysql',
+  SOURCE_USER='repli',
+  SOURCE_PASSWORD='replipass',
+  SOURCE_LOG_FILE='mysql-bin.000004', -- Aquí iría el binlog más reciente
+  SOURCE_LOG_POS=827,
+  GET_SOURCE_PUBLIC_KEY = 1;
+
+Finalmente, iniciamos la replicación con:
+START REPLICA;
+
+Se puede comprobar el estado con el siguiente comando:
+SHOW REPLICA STATUS\G

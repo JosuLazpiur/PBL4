@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout_unloged}">
+<head>
+  <title th:text="#{title.verificar}">Verificar</title>
+  <link rel="stylesheet" th:href="@{/css/verify.css}" />
+</head>
+
+<body>
+  <div layout:fragment="content">
+    <div class="codigo">
+      <h4 th:text="#{verificar.codigo}"></h4>
+
+      <div th:if="${errorVerificar}" class="alert alert-danger">
+        <span th:text="#{errorVerificar}"></span>
+      </div>
+
+      <form th:action="@{/verificar}" method="post">
+        <div class="input-field">
+          <input class="inp" type="number" name="char1" min="0" max="9" />
+          <input class="inp" type="number" name="char2" min="0" max="9" />
+          <input class="inp" type="number" name="char3" min="0" max="9" />
+          <input class="inp" type="number" name="char4" min="0" max="9" />
+          <input class="inp" type="number" name="char5" min="0" max="9" />
+          <input class="inp" type="number" name="char6" min="0" max="9" />
+        </div>
+        <button id="submit" th:text="#{verificar.verificar}"></button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

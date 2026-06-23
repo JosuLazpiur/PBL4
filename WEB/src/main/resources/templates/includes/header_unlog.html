@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+</head>
+
+<body>
+  <!-- Fragmento del header que será incluido en otras páginas -->
+  <header th:fragment="headerFragment">
+
+    <link rel="stylesheet" th:href="@{/css/header_unloged.css}" />
+
+    <div class="container-fluid">
+      <div class="navbar">
+        <div class="navbar-brand">
+          <a href="/" class="logo"><img th:src="@{/images/logo-gertuko.png}" alt="Logo" class="imagen-gertuko"/>Gertuko</a>
+        </div>
+        <ul class="nav-menu">
+          <li class="dropdown">
+            <a id="idioma" href="#">
+              <span th:text="#{nav.lang}"></span>
+              <i class="bi bi-chevron-down toggle-dropdown"></i>
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a href="/locale/eu">
+                  <img th:src="@{/images/flag-eu.png}" alt="Euskera" class="flag-icon" />
+                  <span th:text="#{lang.eu}"></span>
+                </a>
+              </li>
+              <li>
+                <a href="/locale/es">
+                  <img th:src="@{/images/flag-es.svg}" alt="Español" class="flag-icon" />
+                  <span th:text="#{lang.es}"></span>
+                </a>
+              </li>
+              <li>
+                <a href="/locale/en">
+                  <img th:src="@{/images/flag-en.png}" alt="English" class="flag-icon" />
+                  <span th:text="#{lang.en}"></span>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </header>
+</body>
+
+</html>

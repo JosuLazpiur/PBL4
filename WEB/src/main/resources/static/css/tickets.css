@@ -1,0 +1,179 @@
+/* === Fondo general y fuente === */
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Ubuntu', sans-serif;
+  min-height: 100%;
+  background: linear-gradient(to bottom right, #e0f2f1, #a5d6a7);
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+/* === Encabezados === */
+h1, h2 {
+  color: #2e7d32;
+  font-weight: bold;
+}
+
+/* === Contenedor del filtro === */
+.filtro-wrapper {
+  max-width: 350px;
+  width: 100%;
+  margin: 10px;
+}
+
+.filtro-wrapper h2 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+/* === Solo aplica al formulario del filtro === */
+.filtro-wrapper form {
+  background-color: #ffffffcc;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
+  border: 2px solid #a5d6a7;
+}
+
+/* === Select dentro del filtro === */
+.filtro-wrapper select.form-select {
+  border: 2px solid #a5d6a7;
+  border-radius: 8px;
+}
+
+.filtro-wrapper select.form-select:focus {
+  border-color: #66bb6a;
+  box-shadow: 0 0 8px rgba(102, 187, 106, 0.4);
+  outline: none;
+}
+
+/* === Botón filtrar === */
+.filtro-wrapper button.btn-primary {
+  background-color: #43a047;
+  border: none;
+  font-weight: 600;
+}
+
+.filtro-wrapper button.btn-primary:hover {
+  background-color: #2e7d32;
+}
+
+/* === Tarjetas === */
+.ticket-card {
+  background-color: #ffffffdd;
+  border-radius: 16px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  border: 2px solid #81c784;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.ticket-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.15);
+}
+
+.card-title {
+  color: #2e7d32;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.card-text {
+  font-size: 0.95rem;
+  color: #333;
+}
+
+/* Botones en el footer */
+.card-footer a,
+.card-footer button {
+  border: 2px solid transparent;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-weight: 500;
+}
+
+.card-footer .btn-outline-secondary {
+  border-color: #b0bec5;
+  color: #37474f;
+}
+
+.card-footer .btn-outline-primary {
+  border-color: #64b5f6;
+  color: #1e88e5;
+}
+
+.card-footer .btn-outline-danger {
+  border-color: #ef5350;
+  color: #c62828;
+}
+
+/* Hover de botones */
+.card-footer .btn-outline-secondary:hover {
+  background-color: #b0bec5;
+  color: white;
+}
+.card-footer .btn-outline-primary:hover {
+  background-color: #64b5f6;
+  color: white;
+}
+.card-footer .btn-outline-danger:hover {
+  background-color: #ef5350;
+  color: white;
+}
+
+/* Responsividad extra */
+@media (max-width: 992px) {
+  .card-footer {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+
+  .card-footer a,
+  .card-footer button {
+    width: 100%;
+  }
+
+  .card-title {
+    font-size: 1rem;
+  }
+
+  .card-text {
+    font-size: 0.85rem;
+  }
+
+  .filtro-wrapper h2 {
+    font-size: 1rem;
+  }
+  
+}
+@media (min-width: 992px) {
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .card-footer > a,
+  .card-footer > form {
+    flex: 1 1 30%; 
+    max-width: 32%; 
+  }
+
+  .card-footer form,
+  .card-footer a {
+    display: flex;
+    justify-content: center;
+  }
+
+  .card-footer form button,
+  .card-footer a {
+    width: 100%;
+  }
+}

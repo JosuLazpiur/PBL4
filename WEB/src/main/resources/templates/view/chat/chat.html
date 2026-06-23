@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      th:lang="#{idioma}"
+      layout:decorate="~{layout/layout_loged}">
+
+<head>
+    <title th:text="#{title.chat}">Chat</title>
+    <link rel="stylesheet" th:href="@{/css/chat.css}">
+</head>
+
+<body>
+    <div layout:fragment="content" role="main" class="chat-wrapper"
+        th:attr="data-destino=${otro.username}, 
+                data-actual-id=${actual.usuarioId}, 
+                data-chat-id=${chat.chatId}">
+
+        <!-- Chat title -->
+        <div class="chat-title d-flex align-items-center">
+            <img th:if="${otro.imagen != null}"
+                    th:src="@{'/uploads/usuarios/' + ${otro.imagen}}"
+                    class="perfil-img"
+                    alt="Imagen de perfil">
+
+                <img th:if="${otro.imagen == null}"
+                    th:src="@{/images/perfil-usuario.png}"
+                    class="perfil-img"
+                    alt="Imagen de perfil">
+            <span class="ms-2" th:text="${otro.username}">Nombre</span>
+        </div>
+
+        <!-- Mensajes -->
+        <div class="chat-container" id="mensajes">
+            <div th:each="msg : ${mensajes}" 
+                th:class="'mensaje ' + (${msg.remitente.usuarioId} == ${actual.usuarioId} ? 'yo' : 'el')"
+                th:attr="data-id=${msg.mensajeId}">
+                <div class="texto" th:text="${msg.texto}">Texto del mensaje</div>
+                <div class="fecha">
+                    <span th:text="${#temporals.format(msg.fechaEnvio, 'dd/MM/yyyy HH:mm')}"></span>
+
+                    <span th:if="${msg.remitente.usuarioId == actual.usuarioId}" 
+                        class="leido-indicador"
+                        th:text="${msg.leido ? '✔✔' : '✔'}"
+                        th:classappend="${msg.leido ? ' leido' : ''}">
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Input de mensaje -->
+        <div class="chat-input-container">
+            <form id="chatForm" style="display:flex; width:100%;">
+                <input type="text" id="mensajeInput" th:placeholder="#{chat.texto}" autocomplete="off" required />
+                <button type="submit" th:text="#{chat.enviar}">Enviar</button>
+            </form>
+        </div>
+    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout_unloged}"
+      th:lang="#{idioma}">
+<head>
+  <link rel="stylesheet" th:href="@{/css/form-style.css}">
+  <title th:text="#{registro.tituloUsuario}">Registro</title>
+</head>
+
+<body>
+  <div layout:fragment="content" class="main-content">
+      <div class="registro-container">
+      <div class="card registro-card">
+        <div class="card-body">
+          <h2 class="card-title text-center mb-4" th:text="#{index.msgRegister}">Registro</h2>
+
+          <!-- Error: teléfono ya registrado -->
+          <div th:if="${errorTelefono}" class="alert alert-danger">
+            <span th:text="#{errorTelefono}">El teléfono ya está registrado.</span>
+          </div>
+
+          <!-- Error: datos de sesión faltantes -->
+          <div th:if="${errorDatosSesion}" class="alert alert-danger">
+            <span th:text="#{errorDatosSesion}">Faltan datos en la sesión.</span>
+          </div>
+
+          <!-- Error: zona inválida -->
+          <div th:if="${errorZona}" class="alert alert-danger">
+            <span th:text="#{errorZona}">Zona inválida.</span>
+          </div>
+
+          <!-- Error: subir imagen -->
+          <div th:if="${imagenFileName}" class="alert alert-danger">
+            <span th:text="#{imagenFileName}">Error Imagen</span>
+          </div>
+
+          <div th:if="${errorEntrada}" class="alert alert-danger">
+            <span th:text="#{errorEntrada}">No puedes entrar ahi.</span>
+          </div>
+
+          <form th:action="@{/registro}" method="post" id="registroForm" enctype="multipart/form-data">
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="nombre" class="form-label" th:text="#{registro.nombre}">Nombre</label>
+                <input type="text" class="form-control" id="nombre" name="nombre"
+                       th:value="${session.nombre}" required>
+              </div>
+              <div class="col-md-6">
+                <label for="apellido" class="form-label" th:text="#{registro.apellido}">Apellido</label>
+                <input type="text" class="form-control" id="apellido" name="apellido"
+                       th:value="${session.apellido}" required>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="telefono" class="form-label" th:text="#{registro.telefono}">Teléfono</label>
+              <input type="text" class="form-control" id="telefono" name="telefono"
+                     th:value="${session.telefono}" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="rol" class="form-label" th:text="#{registro.rol}">Rol</label>
+              <select class="form-select" id="rol" name="rol" required>
+                <option value="" disabled th:selected="${session.rol == null}" th:text="#{registro.seleccionaRol}">
+                  Selecciona un rol
+                </option>
+                <option value="VENDEDOR" th:selected="${session.rol == 'VENDEDOR'}" th:text="#{registro.vendedor}">Vendedor</option>
+                <option value="CLIENTE" th:selected="${session.rol == 'CLIENTE'}" th:text="#{registro.cliente}">Cliente</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label for="zona" class="form-label" th:text="#{registro.zona}">Zona</label>
+              <select class="form-select" id="zona" name="zona" required>
+                <option value="" disabled th:selected="${session.zonaId == null}" th:text="#{registro.seleccionaZona}">
+                  Selecciona una zona
+                </option>
+                <option th:each="zona : ${zonas}"
+                      th:value="${zona.zonaId}"
+                      th:selected="${session.zonaId == zona.zonaId}"
+                      th:text="#{${#strings.replace(zona.provincia.nombre, ' ', '_')}} + ' - ' + #{${#strings.replace(zona.nombre, ' ', '_')}} ">
+              </option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label for="imagen" class="form-label" th:text="#{registro.imagen}">Imagen</label>
+
+              <input type="file" id="imagen" name="imagen" accept="image/*" class="input-oculto" onchange="mostrarNombreArchivo()" />
+
+              <label for="imagen" class="btn btn-secondary archivo-btn">
+                <span th:text="#{registro.seleccionarArchivo}">Seleccionar archivo</span>
+              </label>
+
+              <span id="nombreArchivo" class="form-text archivo-nombre" th:text="#{registro.noArchivoSeleccionado}">
+                Ningún archivo seleccionado
+              </span>
+            </div>
+
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-primary" th:text="#{registro.siguiente}">Siguiente</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

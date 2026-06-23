@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      th:lang="#{idioma}"
+      layout:decorate="~{layout/layout_loged}">
+
+<head>
+    <title th:text="#{title.misChats}">Mis Chats</title>
+    <link rel="stylesheet" th:href="@{/css/mischats.css}">
+</head>
+
+<body>
+    <div layout:fragment="content" class="main-content">
+        <div class="chat-container" id="chat-container"
+            data-actual-id="${actual.usuarioId}">
+            <h2 class="chat-title" th:text="#{mischats.title}">Mis chats</h2>
+
+            <p class="empty-message" th:if="${#lists.isEmpty(misChats)}" th:text="#{mischats.vacio}">No tienes chats aún.</p>
+
+            <ul class="chat-list" th:if="${!#lists.isEmpty(misChats)}" id="chat-list">
+                <li class="chat-item"
+                    th:each="chat : ${misChats}"
+                    th:with="ultimoMsg=${ultimosMensajes[chat.chatId]}"
+                    th:data-chat-id="${chat.chatId}"
+                    th:data-ultimo-mensaje-id="${ultimoMsg != null ? ultimoMsg.mensajeId : 0}">
+
+                    <div th:with="otroUsuario=${chat.user1.usuarioId == actual.usuarioId} ? ${chat.user2} : ${chat.user1}">
+                        <a class="chat-link" th:href="@{'/chat/' + ${otroUsuario.usuarioId}}">
+
+                            <img th:if="${otroUsuario.imagen != null}"
+                                th:src="@{'/uploads/usuarios/' + ${otroUsuario.imagen}}"
+                                class="perfil-img" alt="Perfil">
+                            <img th:if="${otroUsuario.imagen == null}"
+                                th:src="@{/images/perfil-usuario.png}"
+                                class="perfil-img" alt="Perfil">
+
+                            <div class="chat-text-content">
+                                <div class="chat-header">
+                                    <span class="chat-name" th:text="${otroUsuario.username}">Nombre</span>
+
+                                    <div class="chat-time-container">
+                                        <span class="chat-time"
+                                            th:text="${#temporals.format(chat.ultimaActualizacion, 'HH:mm')}">Hora</span>
+
+                                        <!-- Badge SIEMPRE PRESENTE (vacío por defecto, JS lo llena si hay no leídos) -->
+                                        <span class="unread-badge"
+                                            th:if="${mensajesNoLeidos[chat.chatId] != null and mensajesNoLeidos[chat.chatId] > 0}"
+                                            th:text="${mensajesNoLeidos[chat.chatId]}">
+                                        </span>
+
+                                    </div>
+                                </div>
+
+                                <div class="chat-last-message">
+                                    <span class="message-prefix"
+                                        th:if="${ultimoMsg != null and ultimoMsg.remitente.usuarioId == actual.usuarioId}"
+                                        th:text="${ultimoMsg.leido} ? '✔✔' : '✔'"
+                                        th:classappend="${ultimoMsg.leido ? ' leido' : ''}"></span>
+
+                                    <span th:text="${ultimoMsg != null} ? ${ultimoMsg.texto} : #{mischats.NoMensajes}"></span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

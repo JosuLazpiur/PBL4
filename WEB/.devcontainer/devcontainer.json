@@ -1,0 +1,12 @@
+{
+  "name": "Java Spring Boot with MySQL",
+  "dockerComposeFile": "compose.yml",
+  "service": "java-app",
+  "features": {
+    "ghcr.io/rocker-org/devcontainer-features/apt-packages:1": {
+      "packages": "mysql-client"
+    }
+  },
+  "workspaceFolder": "/workspace"
+  //"postStartCommand": "mvn dependency:resolve"
+}

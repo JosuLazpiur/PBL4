@@ -1,0 +1,195 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Ubuntu', sans-serif;
+  min-height: 100%;
+  background: linear-gradient(to bottom right, #e0f2f1, #a5d6a7);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100% 100%;
+}
+
+#regresionChart{
+  width: 600px;
+  height: 400px;
+}
+.resultado{
+  margin-top: 20px;
+}
+.div-grafico{
+  margin-top: 40px;
+}
+/* Contenedor para el gráfico y el formulario */
+.estadistica-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  min-height: 100vh;
+  box-sizing: border-box;
+  flex-direction: row;
+}
+
+.estadistica-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+
+/*formulario */
+.inicio-card {
+  background-color: #ffffffd9;
+  border-radius: 12px;
+  border: 3px solid #2e7d32;
+  box-shadow: 0 10px 30px rgba(0, 80, 0, 0.2);
+  padding: 2rem;
+  max-width: 500px;
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 700px;
+}
+
+#graficoCard {
+  display: none;
+}
+
+.inicio-card h1 {
+  font-size: 1.5rem;
+  color: #2e7d32;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.inicio-card label {
+  font-weight: 600;
+  color: #2e7d32;
+  display: block;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.inicio-card input[type="number"] {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #cfe9cf;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.inicio-card input[type="number"]:focus {
+  border-color: #56ab2f;
+  box-shadow: 0 0 0 0.25rem rgba(86, 171, 47, 0.3);
+  outline: none;
+}
+
+/* Botón calcular */
+.btn-login {
+  background-color: #56ab2f;
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  margin-top: 1.5rem;
+  width: 100%;
+  transition: background-color 0.3s;
+}
+
+.btn-login:hover,
+.btn-login:focus {
+  background-color: #3d8a1a;
+  outline: none;
+}
+
+/* Resultado */
+.resultado-box {
+  margin-top: 2rem;
+  background-color: #d1e7dd;
+  border: 1px solid #badbcc;
+  padding: 1rem;
+  border-radius: 8px;
+  color: #0f5132;
+  font-weight: 500;
+  text-align: center;
+}
+
+
+.grafico-box {
+  flex: 1 1 400px;
+  background-color: #ffffffd9;
+  border: 3px solid #2e7d32;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0, 80, 0, 0.2);
+  text-align: center;
+}
+
+.grafico-box canvas {
+  width: 100% !important;
+  height: auto !important;
+}
+
+
+@media (min-width: 576px) {
+  .inicio-card h1 {
+    font-size: 1.75rem;
+  }
+
+  .btn-login {
+    font-size: 1.05rem;
+    padding: 14px;
+  }
+}
+
+@media (min-width: 992px) {
+  .estadistica-page {
+    padding: 2rem;
+  }
+
+  .inicio-card {
+    max-width: 600px;
+    margin-bottom: 20px;
+  }
+
+  .inicio-card h1 {
+    font-size: 2rem;
+  }
+  #graficoCard {
+    margin-right: 30px;
+  }
+}
+
+@media (max-width: 992px) {
+  .estadistica-page {
+    flex-direction: column;
+  }
+
+  .inicio-card:first-child {
+    margin-bottom: 20px;
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .estadistica-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .grafico-box,
+  .inicio-card {
+    width: 100%;
+  }
+}

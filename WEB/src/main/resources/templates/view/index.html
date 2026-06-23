@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout/layout_unloged}">
+
+<head>
+  <title th:text="#{title.home}">Inicio</title>
+  <link rel="stylesheet" th:href="@{/css/index.css}">
+</head>
+
+<body>
+  <div layout:fragment="content" class="main-content index-body">
+    <div class="inicio-container">
+      <div class="inicio-card">
+        <h1 th:text="#{welcome}"></h1>
+        <p th:text="#{description}"></p>
+        <div class="botones">
+          <a href="/login" class="btn btn-login" th:text="#{login}"></a>
+          <a href="/registro" class="btn btn-registro" th:text="#{register}"></a>
+        </div>
+      </div>
+
+      <div class="estadistica-container">
+        <div class="inicio-card">
+          <h1>Estudio de Regresión Lineal</h1>
+          <p>Realiza una estimación sencilla de ventas futuras según el comportamiento actual.</p>
+          <div class="botones">
+              <a href="/estadistica" class="btn btn-login">
+                <img th:src="@{/images/grafico.png}" class="grafico" alt="Buscar" />
+                <span th:text="#{estadistica.calcular}">Estadística</span>
+              </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</body>
+
+</html>

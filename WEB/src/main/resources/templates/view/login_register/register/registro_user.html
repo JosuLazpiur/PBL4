@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout_unloged}"
+      th:lang="#{idioma}">
+<head>  
+  <link rel="stylesheet" th:href="@{/css/form-style.css}">
+  <title th:text="#{registro.tituloUsuario}">Registro de Usuario</title>
+</head>
+
+<body>
+    <div layout:fragment="content" class="main-content">
+      <div class="registro-container">
+      <div class="card registro-card">
+        <div class="card-body">
+          <h2 class="card-title text-center mb-4" th:text="#{registro.tituloUsuario}">Completa tu registro</h2>
+
+          <!-- Error: contraseña insegura -->
+          <div th:if="${errorContrasena}" class="alert alert-danger">
+            <span th:text="#{errorContrasena}">Contraseña no segura.</span>
+          </div>
+
+          <!-- Error: email ya registrado -->
+          <div th:if="${errorEmail}" class="alert alert-danger">
+            <span th:text="#{errorEmail}">El email ya está en uso.</span>
+          </div>
+
+          <!-- Error: username ya registrado -->
+          <div th:if="${errorUsuario}" class="alert alert-danger">
+            <span th:text="#{errorUsuario}">El nombre de usuario ya está en uso.</span>
+          </div>
+
+          <form th:action="@{/registro_user}" method="post">
+            <div class="mb-3">
+              <label for="username" class="form-label" th:text="#{registro.usuario}">Usuario</label>
+              <input type="text" class="form-control" id="username" name="username" required th:value="${session.username}">
+            </div>
+
+            <div class="mb-3">
+              <label for="email" class="form-label" th:text="#{registro.email}">Email</label>
+              <input type="email" class="form-control" id="email" name="email" required th:value="${session.email}">
+            </div>
+
+            <div class="mb-3">
+              <label for="password" class="form-label" th:text="#{registro.password}">Contraseña</label>
+              <input type="password" class="form-control" id="password" name="password" required th:value="${session.password}">
+              <div class="form-text" th:text="#{registro.requisitosPassword}">Mínimo 8 caracteres, una mayúscula y un número</div>
+            </div>
+
+            <div class="mb-3" th:if="${session.rol == 'VENDEDOR'}">
+              <label for="descripcion" class="form-label" th:text="#{registro.descripcion}">Descripción</label>
+              <textarea class="form-control" id="descripcion" name="descripcion" rows="3" required th:value="${session.descripcion}"></textarea>
+            </div>
+
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-primary" th:text="#{registro.completarRegistro}">Completar Registro</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    </div>
+</body>
+</html>

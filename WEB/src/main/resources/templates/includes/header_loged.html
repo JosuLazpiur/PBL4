@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <link rel="stylesheet" th:href="@{/css/header.css}">
+</head>
+<body>
+  <header th:fragment="headerFragmentLoged" class="header-loged">
+    <div class="container-fluid">
+      <div class="navbar">
+        <div class="navbar-brand">
+          <a href="/home" class="logo">
+            <img th:src="@{/images/logo-gertuko.png}" alt="Logo" class="imagen-gertuko" />
+            Gertuko
+          </a>
+        </div>
+
+        <div class="right-container">
+          <div class="notificacion-wrapper">
+            <a href="/chats">
+              <img id="mensaje-icono" th:src="@{/images/bell.svg}" alt="Notificaciones" class="icono-bell" />
+            </a>
+            <span id="badge-notificacion" class="badge-notificacion">!</span>
+          </div>
+
+          <button class="hamburger-btn"><i class="bi bi-list"></i></button>
+
+          <div class="profile-dropdown">
+            <ul class="nav-menu">
+              <li class="dropdown">
+                <a href="#">
+                  <img th:if="${session.user.imagen != null}" th:src="@{'/uploads/usuarios/' + ${session.user.imagen}}" class="imagen-logo" alt="Perfil">
+                  <img th:if="${session.user.imagen == null}" th:src="@{/images/perfil-usuario.png}" class="imagen-logo" alt="Perfil">
+                  <i class="bi bi-chevron-down chevron"></i>
+                </a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a th:href="@{'/user/' + ${session.user.usuarioId} + '/edit'}">
+                      <img th:src="@{/images/perfil-usuario.png}" class="flag-icon" />
+                      <span th:text="#{header.editPerfil}">Editar Perfil</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                      <img th:src="@{/images/cerrar-sesion.png}" class="flag-icon" />
+                      <span th:text="#{header.logout}">Cerrar Sesión</span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mobile-sidebar" id="mobileSidebar">
+          <div class="sidebar-content">
+            <button class="close-btn" onclick="toggleSidebar()">✕</button>
+            <ul class="nav-menu">
+              <img th:src="@{/images/logo-gertuko.png}" class="logo-sidebar" />
+              <!-- Menú Tickets -->
+              <li class="dropdown">
+                <a href="#"><img th:src="@{/images/ticket.png}" class="flag-icon" />
+                  <span th:text="#{header.tickets}">Tickets</span>
+                  <i class="bi bi-chevron-down chevron"></i>
+                </a>
+                <ul class="dropdown-menu">
+                  <li th:if="${session.user.rol.name() == 'VENDEDOR'}">
+                    <a href="/ticket/create">
+                      <img th:src="@{/images/crear-producto.png}" class="flag-icon" />
+                      <span th:text="#{header.createTicket}">Crear Ticket</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/ticket/list">
+                      <img th:src="@{/images/mis-productos.png}" class="flag-icon" />
+                      <span th:text="#{header.listTicket}">Lista Tickets</span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+
+              <!-- Menú Productos -->
+              <li class="dropdown" th:if="${session.user.rol.name() == 'VENDEDOR'}">
+                <a id="chat" href="#">
+                  <img th:src="@{/images/comida.png}" class="flag-icon" />
+                  <span th:text="#{header.productos}">Productos</span>
+                  <i class="bi bi-chevron-down chevron"></i>
+                </a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a href="/producto/create">
+                      <img th:src="@{/images/crear-producto.png}" class="flag-icon" />
+                      <span th:text="#{header.createProduct}">Crear Producto</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/producto/list">
+                      <img th:src="@{/images/mis-productos.png}" class="flag-icon" />
+                      <span th:text="#{header.misProductos}">Mis Productos</span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+
+              <!-- Menú Idiomas -->
+              <li class="dropdown">
+                <a href="#"><img th:src="@{/images/hizkuntzak.png}" class="flag-icon" />
+                  <span th:text="#{nav.lang}"></span>
+                  <i class="bi bi-chevron-down chevron"></i>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a href="/locale/eu"><img th:src="@{/images/flag-eu.png}" class="flag-icon" /><span th:text="#{lang.eu}"></span></a></li>
+                  <li><a href="/locale/es"><img th:src="@{/images/flag-es.svg}" class="flag-icon" /><span th:text="#{lang.es}"></span></a></li>
+                  <li><a href="/locale/en"><img th:src="@{/images/flag-en.png}" class="flag-icon" /><span th:text="#{lang.en}"></span></a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+      </div>
+    </div>
+    <form id="logout-form" th:action="@{/logout}" method="post" style="display: none;"></form>
+  </header>
+</body>
+</html>

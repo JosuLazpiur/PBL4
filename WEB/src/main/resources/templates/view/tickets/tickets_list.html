@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" th:lang="#{idioma}"
+  layout:decorate="~{layout/layout_loged}">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title th:text="#{mistickets.titulo}">Mis Tickets</title>
+  <link rel="stylesheet" th:href="@{/css/tickets.css}" />
+</head>
+
+<body>
+  <div layout:fragment="content" role="main">
+    <div class="container-fluid px-3 mt-4">
+      <h2 th:text="#{mistickets.titulo}">Mis Tickets</h2>
+
+      <div class="col-12 filtro-wrapper mx-0">
+        <div th:if="${errorEntrada}" class="alert alert-danger">
+          <span th:text="#{errorEntrada}">No puedes entrar ahi.</span>
+        </div>
+        <div th:if="${errorCesta}" class="alert alert-danger">
+            <span th:text="#{errorCesta}">No puedes entrar ahí.</span>
+        </div>
+      </div>
+
+      <div class="row gx-3">
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4" th:each="entry : ${ticketConCestas}">
+          <div class="card border border-primary rounded-4 ticket-card">
+            <div class="card-body">
+              <h5 class="card-title" th:text="${entry.key.vendedor.nombre}">Nombre Vendedor</h5>
+
+              <p class="card-text">
+                <strong th:text="#{ticket.cliente}">Cliente:</strong>
+                <span th:text="${entry.key.cliente.nombre + ' ' + entry.key.cliente.apellido}">Nombre Cliente</span>
+              </p>
+
+              <p class="card-text">
+                <strong th:text="#{ticket.fechaEntrega}">Fecha de entrega esperada:</strong>
+                <span th:if="${entry.key.fechaEntregaEsperada != null}"
+                  th:text="${#temporals.format(entry.key.fechaEntregaEsperada, 'dd/MM/yyyy HH:mm')}">05/01/2025
+                  16:00</span>
+                <span th:if="${entry.key.fechaEntregaEsperada == null}" th:text="#{ticket.pendiente}">Pendiente</span>
+              </p>
+
+              <p class="card-text">
+                <strong th:text="#{ticket.estado}">Estado:</strong>
+                <span th:if="${entry.key.estado}" th:text="#{ticket.entregado}"></span>
+                <span th:if="${!entry.key.estado}" th:text="#{ticket.pendiente}"></span>
+              </p>
+
+              <p class="card-text">
+                <strong th:text="#{ticket.productos}">Productos:</strong>
+              <ul>
+                <li th:each="cesta : ${entry.value}">
+                  <span th:text="${cesta.producto.nombre}">Producto</span>
+                  <span th:text="${cesta.cantidad}">Cantidad</span> 
+                </li>
+              </ul>
+              </p>
+
+              <p class="card-text">
+                <strong th:text="#{ticket.precioTotal}">Precio Total:</strong>
+                <span th:text="${preciosTotales[entry.key]} + '€'">0.00</span>
+              </p>
+            </div>
+
+            <div class="card-footer bg-white d-flex justify-content-between rounded-bottom-4"
+              th:if="${session.user.rol.name() == 'VENDEDOR'}">
+              <a th:href="@{'/ticket/' + ${entry.key.ticketId} + '/edit'}" class="btn btn-outline-secondary"
+                th:text="#{ticket.editar}">Editar</a>
+
+              <form th:if="${!entry.key.estado}" th:action="@{'/ticket/' + ${entry.key.ticketId} + '/entregar'}"
+                method="post" class="m-0">
+                <button type="submit" class="btn btn-outline-primary" th:text="#{ticket.entregar}">Entregar</button>
+              </form>
+
+              <form th:action="@{'/ticket/' + ${entry.key.ticketId} + '/delete'}" method="post" class="m-0">
+                <button type="submit" class="btn btn-outline-danger" th:text="#{ticket.eliminar}">Eliminar</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</body>
+
+</html>

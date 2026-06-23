@@ -1,0 +1,18 @@
+Sistema de copias de seguridad automáticas
+
+Para las copias de seguridad hemos activado un proceso automatizado usando cron, que guarda una copia de la base de datos todos los días a las 3 de la mañana.
+
+La línea añadida al crontab es la siguiente:
+0 3 * * * backup.sh
+
+Esto indica que el script backup.sh se ejecutará automáticamente a las 03:00 cada día.
+
+Dentro del script se definen algunas variables, como la fecha actual, la base de datos a copiar (gertuko), el usuario y la contraseña. Luego se utiliza el comando mysqldump para generar una copia completa de la base de datos.
+
+El archivo generado se guarda con la fecha y hora en el nombre, para poder reconocer cuándo se hizo cada copia.
+
+Para restaurar una copia de seguridad, se puede utilizar el comando mysql con la redirección del archivo .sql generado por el script. El comando sería:
+
+mysql -h mysql -P 3306 -u root -ppasahitza gertuko < backups/gertuko-AAAA-MM-DD_HH-MM.sql
+
+Solo hay que sustituir gertuko-AAAA-MM-DD_HH-MM.sql por el nombre del archivo de la copia que se desea restaurar.
